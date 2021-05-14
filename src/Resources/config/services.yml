@@ -1,0 +1,16 @@
+services:
+
+    aeris.fiesta_online.account_manager:
+        class: Aeris\FiestaOnlineBundle\Manager\AccountManager
+        arguments:
+            - '@doctrine'
+            - '@aeris.fiesta_online.character_manager'
+    Aeris\FiestaOnlineBundle\Manager\AccountManager:
+        alias: aeris.fiesta_online.account_manager
+
+    aeris.fiesta_online.character_manager:
+        class: Aeris\FiestaOnlineBundle\Manager\CharacterManager
+        arguments:
+            - '@doctrine'
+    Aeris\FiestaOnlineBundle\Manager\CharacterManager:
+        alias: aeris.fiesta_online.character_manager

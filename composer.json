@@ -1,0 +1,24 @@
+{
+    "name": "aeris/fiesta-online-bundle",
+    "description": "This bundle eases the development to Fiesta Online Homepages",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniel Engelke",
+            "email": "flainity@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2.5",
+        "doctrine/annotations": "^1.0",
+        "doctrine/doctrine-bundle": "^2.2",
+        "doctrine/doctrine-migrations-bundle": "^3.0",
+        "doctrine/orm": "^2.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Aeris\\FiestaOnlineBundle\\": "src/"
+        }
+    }
+}
