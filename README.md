@@ -5,7 +5,7 @@ This bundle includes all most relevant Entities and Managers needed to create a 
 ## Installation for Symfony 4 & 5
 The bundle is available via packagist to directly integrate into your application
 1. Go into your root directory of your project
-2. Run `composer require aeris/fiesta-online-bundle`
+2. Run `composer require aerisnet/fiesta-online-bundle`
 3. To use the included Entities with your application, you have to refer to the bundle entities in your doctrine configuration. An example mapping can be found below
 ```php
 dbal:
@@ -28,7 +28,32 @@ orm:
                 alias: Character
 ```
 ## Examples
-#### Get a character
+#### Account Manager
+```php
+public function indexAction(AccountManager $accountManager)
+{
+    /** 
+     * @var User $user 
+     * returns a User instance or null by the given Account ID
+     */
+    $user = $accountManager->getAccountById(5);
+    ...
+    
+    /** 
+     * @var User[] $user 
+     * returns all accounts
+     */
+    $user = $accountManager->getAllAccounts();
+    ...
+    
+    /**
+     * @var User $user
+     * returns a User instance with all characters belonging to the account as Proxy objects
+     */
+    $user = $accountManager->getAccountWithCharacters(5);
+}
+```
+#### Character Manager
 ```php
 public function indexAction(CharacterManager $characterManager)
 {
@@ -38,10 +63,18 @@ public function indexAction(CharacterManager $characterManager)
      */
     $character = $characterManager->getCharacterById(123);
     ...
+    
     /** 
      * @var Character $character 
      * returns a Character instance or null by the given Character Name
      */
     $character = $characterManager->getCharacterByName('Visionaire');
+    ...
+    
+    /**
+     * Check if a character has an item in their inventory
+     * Parameters are Character ID and Item ID
+     */
+    $hasItem = $characterManager->hasItemInInventory($character->getId(), 385782);
 }
 ```
