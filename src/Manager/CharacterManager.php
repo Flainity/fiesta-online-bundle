@@ -88,22 +88,22 @@ class CharacterManager
         return $characters;
     }
 
-    public function getSingleCharacterWithClass(int $characterId): Character
+    public function getCharacterById(int $characterId): Character
     {
         /** @var Character $character */
         $character = $this->doctrine->getManager('character')
             ->getRepository(Character::class)->findOneBy(['id' => $characterId]);
 
-        /** @var CharacterClass $characterClass */
-        $characterClass = $this->doctrine->getManager('character')
-            ->getRepository(CharacterClass::class)->findOneBy(['id' => $characterId]);
+        return $this->buildCharacterObject($character);
+    }
 
-        $characterClass->setName($this->classList[$characterClass->getClassId()]->getName());
-        $characterClass->setImage($this->classList[$characterClass->getClassId()]->getImage());
+    public function getCharacterByName(string $characterName): Character
+    {
+        /** @var Character $character */
+        $character = $this->doctrine->getManager('character')
+            ->getRepository(Character::class)->findOneBy(['name' => $characterName]);
 
-        $character->setClass($characterClass);
-
-        return $character;
+        return $this->buildCharacterObject($character);
     }
 
     public function hasItemInInventory(int $characterId, int $itemId): bool
@@ -111,5 +111,19 @@ class CharacterManager
         return $this->doctrine->getManager('character')
             ->getRepository(Item::class)
                 ->findOneBy(['owner' => $characterId, 'item_id' => $itemId, 'storage_type' => 9]) instanceof Item;
+    }
+
+    private function buildCharacterObject(Character $character): ?Character
+    {
+        /** @var CharacterClass $characterClass */
+        $characterClass = $this->doctrine->getManager('character')
+            ->getRepository(CharacterClass::class)->findOneBy(['id' => $character->getId()]);
+
+        $characterClass->setName($this->classList[$characterClass->getClassId()]->getName());
+        $characterClass->setImage($this->classList[$characterClass->getClassId()]->getImage());
+
+        $character->setClass($characterClass);
+
+        return $character;
     }
 }
