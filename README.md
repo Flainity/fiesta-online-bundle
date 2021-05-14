@@ -27,3 +27,21 @@ orm:
                 prefix: 'Aeris\FiestaOnlineBundle\Entity\Character'
                 alias: Character
 ```
+## Examples
+#### Get a character
+```php
+public function indexAction(CharacterManager $characterManager)
+{
+    /** 
+     * @var Character $character 
+     * returns a Character instance or null by the given Character ID
+     */
+    $character = $characterManager->getCharacterById(123);
+    ...
+    /** 
+     * @var Character $character 
+     * returns a Character instance or null by the given Character Name
+     */
+    $character = $characterManager->getCharacterByName('Visionaire');
+}
+```
