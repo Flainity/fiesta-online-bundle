@@ -1,5 +1,5 @@
 {
-    "name": "aeris/fiesta-online-bundle",
+    "name": "aerisnet/fiesta-online-bundle",
     "description": "This bundle eases the development to Fiesta Online Homepages",
     "type": "symfony-bundle",
     "license": "MIT",
