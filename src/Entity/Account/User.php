@@ -200,6 +200,13 @@ class User implements UserInterface
         return $this;
     }
 
+    public function addMallCoins(int $amount): self
+    {
+        $this->mall_coins += $amount;
+
+        return $this;
+    }
+
     public function getAuthentication(): ?Authentication
     {
         return $this->authentication;

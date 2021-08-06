@@ -14,3 +14,9 @@ services:
             - '@doctrine'
     Aeris\FiestaOnlineBundle\Manager\CharacterManager:
         alias: aeris.fiesta_online.character_manager
+    aeris.fiesta_online.ticket_manager:
+        class: Aeris\FiestaOnlineBundle\Ticketsystem\TicketManager
+        arguments:
+            - '@doctrine'
+    Aeris\FiestaOnlineBundle\Ticketsystem\TicketManager:
+        alias: aeris.fiesta_online.ticket_manager
