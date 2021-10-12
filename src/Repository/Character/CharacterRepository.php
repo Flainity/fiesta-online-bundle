@@ -19,6 +19,31 @@ class CharacterRepository extends ServiceEntityRepository
         parent::__construct($registry, Character::class);
     }
 
+    public function getCharactersFromLastSevenDays()
+    {
+        $queryBuilder = $this->createQueryBuilder('c');
+        $charCount = [];
+
+        for ($i = 1; $i <= 7; $i++)
+        {
+            $tempTime = new \DateTime('- 7 days');
+            $dateTime = $tempTime->modify('+ '.$i.' days');
+
+            $charCount[$i]['date'] = $dateTime->format('d.M.Y');
+            $charCount[$i]['count'] =
+                $queryBuilder
+                ->select('COUNT(c.id)')
+                ->where('c.created_at >= :start')
+                ->andWhere('c.created_at <= :end')
+                ->setParameter('start', $dateTime->setTime(0, 0, 0, 000000)->format('Y-m-d H:i:s.u'))
+                ->setParameter('end', $dateTime->setTime(23, 59, 59, 000000)->format('Y-m-d H:i:s.u'))
+                ->getQuery()
+                ->getSingleScalarResult();
+        }
+
+        return $charCount;
+    }
+
     // /**
     //  * @return Character[] Returns an array of Character objects
     //  */

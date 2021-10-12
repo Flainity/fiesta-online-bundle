@@ -38,6 +38,11 @@ class PaySafeCard
      */
     private $status = 0;
 
+    /**
+     * @ORM\Column(type="string", length=255, name="sAmount")
+     */
+    private $amount;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,5 +94,21 @@ class PaySafeCard
         $this->status = $status;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+
+    /**
+     * @param mixed $amount
+     */
+    public function setAmount($amount): void
+    {
+        $this->amount = $amount;
     }
 }

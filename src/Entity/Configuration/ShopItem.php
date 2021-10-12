@@ -34,6 +34,16 @@ class ShopItem
     private $amount;
 
     /**
+     * @ORM\Column(type="integer", name="nDuration")
+     */
+    private $duration;
+
+    /**
+     * @ORM\Column(type="string", name="sDurationUnit")
+     */
+    private $durationUnit;
+
+    /**
      * @ORM\Column(type="integer", name="nPrice")
      */
     private $price;
@@ -48,6 +58,12 @@ class ShopItem
      * @ORM\JoinColumn(nullable=false, referencedColumnName="nID", name="nCat")
      */
     private $category;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=ShopItemStats::class)
+     * @ORM\JoinColumn(nullable=true, referencedColumnName="nID", name="nStats")
+     */
+    private $stats;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true, name="sImg")
@@ -98,6 +114,38 @@ class ShopItem
         $this->amount = $amount;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+
+    /**
+     * @param mixed $duration
+     */
+    public function setDuration($duration): void
+    {
+        $this->duration = $duration;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDurationUnit()
+    {
+        return $this->durationUnit;
+    }
+
+    /**
+     * @param mixed $durationUnit
+     */
+    public function setDurationUnit($durationUnit): void
+    {
+        $this->durationUnit = $durationUnit;
     }
 
     public function getPrice(): ?int
@@ -158,5 +206,21 @@ class ShopItem
         $this->enabled = $enabled;
 
         return $this;
+    }
+
+    /**
+     * @return ShopItemStats|null
+     */
+    public function getStats(): ?ShopItemStats
+    {
+        return $this->stats;
+    }
+
+    /**
+     * @param mixed $stats
+     */
+    public function setStats($stats): void
+    {
+        $this->stats = $stats;
     }
 }

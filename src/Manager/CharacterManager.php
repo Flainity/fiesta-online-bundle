@@ -97,13 +97,13 @@ class CharacterManager
         return $this->buildCharacterObject($character);
     }
 
-    public function getCharacterByName(string $characterName): Character
+    public function getCharacterByName(string $characterName): ?Character
     {
         /** @var Character $character */
         $character = $this->doctrine->getManager('character')
             ->getRepository(Character::class)->findOneBy(['name' => $characterName]);
 
-        return $this->buildCharacterObject($character);
+        return $character ? $this->buildCharacterObject($character) : null;
     }
 
     public function hasItemInInventory(int $characterId, int $itemId): bool

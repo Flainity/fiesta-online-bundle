@@ -7,6 +7,7 @@ use Aeris\FiestaOnlineBundle\Repository\Account\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -16,6 +17,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface
 {
     /**
+     * @Groups("api")
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer", name="nUserNo")
@@ -23,6 +25,7 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @Groups("api")
      * @ORM\Column(type="string", length=255, name="sUserID")
      */
     private $username;
@@ -33,6 +36,7 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @Groups("api")
      * @ORM\Column(type="boolean", name="bIsAdmin")
      */
     private $admin = false;
@@ -58,6 +62,7 @@ class User implements UserInterface
     private $created_at;
 
     /**
+     * @Groups("api")
      * @ORM\Column(type="integer", name="nAGPoints")
      */
     private $mall_coins = 0;
@@ -200,13 +205,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function addMallCoins(int $amount): self
-    {
-        $this->mall_coins += $amount;
-
-        return $this;
-    }
-
     public function getAuthentication(): ?Authentication
     {
         return $this->authentication;
@@ -233,5 +231,10 @@ class User implements UserInterface
     public function setCharacters(?array $characters): void
     {
         $this->characters = $characters;
+    }
+
+    public function __toString()
+    {
+        return $this->username;
     }
 }

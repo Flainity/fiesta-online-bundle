@@ -35,6 +35,31 @@ class UserRepository extends ServiceEntityRepository
         }
     }
 
+    public function getAccountsFromLastSevenDays()
+    {
+        $queryBuilder = $this->createQueryBuilder('a');
+        $accountCount = [];
+
+        for ($i = 1; $i <= 7; $i++)
+        {
+            $tempTime = new \DateTime('- 44 days');
+            $dateTime = $tempTime->modify('+ '.$i.' days');
+
+            $accountCount[$i]['date'] = $dateTime->format('d.M.Y');
+            $accountCount[$i]['count'] =
+                $queryBuilder
+                    ->select('COUNT(a.id)')
+                    ->where('a.created_at >= :start')
+                    ->andWhere('a.created_at <= :end')
+                    ->setParameter('start', $dateTime->setTime(0, 0, 0, 000000)->format('Y-m-d H:i:s.u'))
+                    ->setParameter('end', $dateTime->setTime(23, 59, 59, 000000)->format('Y-m-d H:i:s.u'))
+                    ->getQuery()
+                    ->getSingleScalarResult();
+        }
+
+        return $accountCount;
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
